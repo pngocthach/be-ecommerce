@@ -1,0 +1,23 @@
+@hostname = localhost
+@port = 5000
+@host = http://{{hostname}}:{{port}}
+@contentType = application/json
+
+### login route
+POST {{host}}/auth/login
+
+### register route
+POST {{host}}/auth/register
+Content-Type: {{contentType}}
+
+{
+  "email": "Test2@mail.com",
+  "password": "test"
+}
+
+
+### refresh token route
+POST {{host}}/auth/refresh-token
+
+### logout route
+DELETE {{host}}/auth/logout
