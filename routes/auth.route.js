@@ -1,6 +1,7 @@
 import express from 'express'
 import createError from 'http-errors'
 import User from '../models/user.model.js'
+import { authSchema } from '../helpers/validationSchema.js'
 
 const router = express.Router()
 
@@ -10,8 +11,7 @@ router.post('/login', async (req, res, next) => {
 
 router.post('/register', async (req, res, next) => {
   try {
-    const { email, password } = req.body
-    if (!email || !password) throw createError.BadRequest()
+    const { email, password } = await authSchema.validateAsync(req.body)
 
     const isExisted = await User.findOne({ email })
     if (isExisted) throw createError.Conflict(`${email} is already existed`)
@@ -19,6 +19,7 @@ router.post('/register', async (req, res, next) => {
     res.send(user)
 
   } catch (err) {
+    if (err.isJoi) err.status = 422
     next(err)
   }
 })
