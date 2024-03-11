@@ -5,6 +5,7 @@ import 'dotenv/config'
 import authRoute from './routes/auth.route.js'
 import databaseConnection from './helpers/initMongodb.js'
 import mongoose from 'mongoose'
+import { verifyAccessToken } from './helpers/jwtHelper.js'
 
 const app = express()
 app.use(morgan('dev'))
@@ -13,7 +14,8 @@ app.use(express.urlencoded({ extended: true }))
 
 const PORT = process.env.PORT | 5000
 
-app.get('/', async (req, res, next) => {
+app.get('/', verifyAccessToken, async (req, res, next) => {
+  console.log(req.headers.authorization)
   res.send('hello')
 })
 
