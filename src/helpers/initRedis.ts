@@ -3,9 +3,9 @@ import redis from 'redis'
 const client = redis.createClient({
   password: process.env.REDIS_PASSWORD,
   socket: {
-    host: process.env.REDIS_URI,
-    port: process.env.REDIS_PORT
-  }
+    host: process.env.REDIS_URI!,
+    port: +process.env.REDIS_PORT!,
+  },
 })
 
 try {
@@ -27,7 +27,7 @@ client.on('end', () => {
 })
 
 client.on('error', (err) => {
-  console.log(err.message)
+  console.log((err as Error).message)
 })
 
 process.on('SIGINT', async () => {
