@@ -1,17 +1,19 @@
-import express from "express";
-import { verifyAccessToken } from "../helpers/jwtHelper";
-import UserController from "../controllers/user.controller";
+import express from 'express'
+import { verifyAccessToken } from '../helpers/jwtHelper'
+import UserController from '../controllers/user.controller'
+import validateRequest from '../middlewares/validateRequest'
+import { updateUserSchema } from '../helpers/validationSchema'
 
-const router = express.Router();
+const router = express.Router()
 
-router.get("/user", (req, res) => {
-  res.send("user");
-});
+router.get('/user/', verifyAccessToken, UserController.getUser)
 
-router.post("/user", (req, res) => {
-  res.send("user");
-});
+router.get('/user/:userId', verifyAccessToken, UserController.getUser)
 
-router.put("/", verifyAccessToken, UserController.updateUser);
+router.get('/allUser', verifyAccessToken, UserController.getAllUser)
 
-export default router;
+router.put('/updateUser', validateRequest(updateUserSchema), verifyAccessToken, UserController.updateUser)
+
+router.delete('/deleteUser/:userId', verifyAccessToken, UserController.deleteUser)
+
+export default router

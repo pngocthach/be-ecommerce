@@ -13,7 +13,7 @@ class Database {
     mongoose
       .connect(connectionString, { dbName: process.env.DB_NAME })
       .then(() => {
-        console.log('Connected to MongoDB')
+        console.log('Connected to MongoDB (from mongoose)')
       })
       .catch((err) => {
         console.log((<Error>err).message)

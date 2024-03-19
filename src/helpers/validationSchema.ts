@@ -6,9 +6,9 @@ const authSchema = Joi.object({
 })
 
 const updateUserSchema = Joi.object({
-  userId: Joi.string().required(),
-  email: Joi.string().email().lowercase(),
-  password: Joi.string().min(2)
+  userId: Joi.string().required().trim(),
+  email: Joi.string().email().lowercase().trim(),
+  password: Joi.string().min(2).trim()
 })
 
 export {

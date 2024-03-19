@@ -14,7 +14,9 @@
     "indent": ["error", 2],
     "linebreak-style": ["error", "unix"],
     "quotes": ["error", "single"],
-    "semi": ["error", "never"]
+    "semi": ["error", "never"],
+    "@typescript-eslint/no-unused-vars": "warn"
+    // "max-len": ["error", { "code": 80 }]
   },
   "ignorePatterns": ["dist/**"]
 }
