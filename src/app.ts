@@ -6,7 +6,6 @@ import './helpers/initRedis'
 import router from './routes/index.route'
 import 'express-async-errors'
 import errorRoute from './middlewares/error.middleware'
-import './db/initMongoDb'
 
 const app = express()
 app.use(morgan('dev'))

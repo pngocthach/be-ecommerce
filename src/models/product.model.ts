@@ -8,8 +8,7 @@ export interface IProduct {
   product_price: number;
   product_quantity: number;
   product_shop: string;
-  product_attributes: (IClothing | IElectronics)[];
-  product_id?: ObjectId;
+  product_attributes: IClothing | IElectronic;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -20,7 +19,7 @@ export interface IClothing {
   color?: string;
 }
 
-export interface IElectronics {
+export interface IElectronic {
   brand: string;
   model?: string;
   color?: number;
@@ -32,7 +31,10 @@ const clothingSchema = {
   required: ['brand'],
   additionalProperties: false,
   properties: {
-    _id: {},
+    _id: {
+      bsonType: 'objectId',
+      description: '\'_id\' is an optional field and is an objectId'
+    },
     brand: {
       bsonType: 'string',
       description: '\'brand\' is required and is a string'
@@ -54,13 +56,16 @@ await db.command({
   }
 })
 
-const Electronics = db.collection<IElectronics>('electronics')
+const Electronic = db.collection<IElectronic>('electronics')
 const electronicsSchema = {
   bsonType: 'object',
   required: ['brand'],
   additionalProperties: false,
   properties: {
-    _id: {},
+    _id: {
+      bsonType: 'objectId',
+      description: '\'_id\' is an optional field and is an objectId'
+    },
     brand: {
       bsonType: 'string',
       description: '\'brand\' is required and is a string'
@@ -89,7 +94,10 @@ const productSchema = {
   required: ['product_name', 'product_price', 'product_shop'],
   additionalProperties: false,
   properties: {
-    _id: {},
+    _id: {
+      bsonType: 'objectId',
+      description: '\'_id\' is an optional field and is an objectId'
+    },
     product_name: {
       bsonType: 'string',
       description: '\'product_name\' is required and is a string'
@@ -115,12 +123,8 @@ const productSchema = {
       description: '\'product_shop\' is required and is a string'
     },
     product_attributes: {
-      bsonType: 'array',
-      description: '\'product_attributes\' is required and is an array'
-    },
-    product_id: {
-      bsonType: 'objectId',
-      description: '\'product_id\' is an optional field and is an objectId'
+      bsonType: 'object',
+      description: '\'product_attributes\' is required and is an object'
     },
     createdAt: {
       bsonType: 'date',
@@ -140,4 +144,4 @@ await db.command({
   }
 })
 
-export default { Product, Clothing, Electronics }
+export { Product, Clothing, Electronic }
